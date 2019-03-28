@@ -1,7 +1,7 @@
 from flask import Flask
 from redis import Redis
 application = Flask(__name__)
-R = Redis(host="web1.redis1.svc.cluster.local", port=15638)
+R = Redis(host="demo.redis1.svc.cluster.local", port=17676)
 #R = Redis()
 
 @application.route("/")
