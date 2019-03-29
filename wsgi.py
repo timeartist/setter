@@ -5,7 +5,7 @@ from flask import Flask, request, render_template
 from redis import Redis
 
 application = Flask(__name__)
-redis = Redis(host="demo-db.redis1.svc.cluster.local", port=12345)
+redis = Redis(host="demo-db.adi.svc.cluster.local", port=12345)
 
 @application.route('/')
 def form():
