@@ -9,7 +9,8 @@ redis = Redis(host="demo-db.redis1.svc.cluster.local", port=12345)
 
 @application.route('/')
 def form():
-    return render_template('form.html')
+    return str(redis.ping())
+#    return render_template('form.html')
 
 @application.route('/', methods=['POST'])
 def submit():
