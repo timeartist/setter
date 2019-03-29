@@ -1,12 +1,27 @@
-from flask import Flask
-from redis import Redis
-application = Flask(__name__)
-R = Redis(host="demo-db.redis1.svc.cluster.local", port=12345)
-#R = Redis()
+from os import getenv
+from json import loads
 
-@application.route("/")
-def hello():
-    return str(R.ping())
+from flask import Flask, request, render_template
+from redis import Redis
+
+application = Flask(__name__)
+redis = Redis(host="demo-db.redis1.svc.cluster.local", port=12345)
+
+@application.route('/')
+def form():
+    return render_template('form.html')
+
+@application.route('/', methods=['POST'])
+def submit():
+    print request.form
+    _ = redis.rpush('form-inputs', request.form['input-text'])
+    return render_template('form.html', success=True)
+
+@application.route('/clear')
+def clear():
+    redis.flushdb()
+    return 'DB Cleared'
+
 
 if __name__ == "__main__":
     application.run()
